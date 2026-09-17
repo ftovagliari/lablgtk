@@ -36,6 +36,8 @@
 #include "ml_gdk.h"
 #include "ml_gtk.h"
 #include "gtk_tags.h"
+#include <stdio.h>
+#include "ml_gdk.h"
 
 /* Init all */
 
@@ -50,12 +52,43 @@ CAMLprim value ml_gtkbin_init(value unit)
         gtk_aspect_frame_get_type() +
         gtk_handle_box_get_type() +
         gtk_viewport_get_type() +
+        gtk_popover_get_type() +
         gtk_scrolled_window_get_type() 
 #ifdef HASGTK24
         + gtk_expander_get_type()
 #endif
 ;
     return Val_GType(t);
+}
+
+#define GtkPopover_val(val) check_cast(GTK_POPOVER, val)
+ML_1 (gtk_popover_popup, GtkPopover_val, Unit)
+ML_1 (gtk_popover_popdown, GtkPopover_val, Unit)
+
+CAMLprim value ml_gtk_popover_set_pointing_to(value v_popover, value v_rect) {
+    CAMLparam2(v_popover, v_rect);
+    GdkRectangle *rect = GdkRectangle_val(v_rect);
+    //printf("[C DEBUG] Popover: %p | x: %d, y: %d, w: %d, h: %d\n",
+    //       (void*)GtkPopover_val(v_popover), rect->x, rect->y, rect->width, rect->height);
+    fflush(stdout);
+    gtk_popover_set_pointing_to(GtkPopover_val(v_popover), rect);
+    CAMLreturn(Val_unit);
+}
+CAMLprim value ml_gtk_popover_get_pointing_to(value v_popover) {
+    CAMLparam1(v_popover);
+    CAMLlocal2(v_tuple, v_opt);
+    GdkRectangle rect;
+    if (gtk_popover_get_pointing_to(GtkPopover_val(v_popover), &rect)) {
+        v_tuple = caml_alloc_tuple(4);
+        Store_field(v_tuple, 0, Val_int(rect.x));
+        Store_field(v_tuple, 1, Val_int(rect.y));
+        Store_field(v_tuple, 2, Val_int(rect.width));
+        Store_field(v_tuple, 3, Val_int(rect.height));
+        v_opt = caml_alloc(1, 0); /* Some */
+        Store_field(v_opt, 0, v_tuple);
+        CAMLreturn(v_opt);
+    }
+    CAMLreturn(Val_int(0)); /* None */
 }
 
 /* gtkalignment.h */

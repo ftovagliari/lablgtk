@@ -65,6 +65,49 @@ val scrolled_window :
   ?height:int ->
   ?packing:(widget -> unit) -> ?show:bool -> unit -> scrolled_window
 
+(** {3 GtkPopover} *)
+
+class popover_signals : ([> Gtk.popover] as 'a) Gtk.obj ->
+  object
+    inherit GContainer.container_signals
+    val obj : 'a obj
+    method closed : callback:(unit -> unit) -> GtkSignal.id
+    method notify_relative_to : callback:(GObj.widget -> unit) -> GtkSignal.id
+    method notify_position : callback:(GtkEnums.position_type -> unit) -> GtkSignal.id
+    method notify_modal : callback:(bool -> unit) -> GtkSignal.id
+    method notify_transitions_enabled : callback:(bool -> unit) -> GtkSignal.id
+  end
+
+  (** @since GTK 3.12
+    @gtkdoc gtk GtkPopover *)
+  class popover : Gtk.popover obj ->
+    object
+      inherit GContainer.bin
+      val obj : Gtk.popover obj
+      method relative_to : GObj.widget
+      method position : GtkEnums.position_type
+      method modal : bool
+      method transitions_enabled : bool
+      method pointing_to : Gdk.Rectangle.t option
+      method set_relative_to : GObj.widget -> unit
+      method set_position : GtkEnums.position_type -> unit
+      method set_pointing_to : Gdk.Rectangle.t -> unit
+      method set_modal : bool -> unit
+      method set_transitions_enabled : bool -> unit
+      method popup : unit -> unit
+      method popdown : unit -> unit
+      method connect : popover_signals
+    end
+
+(** @since GTK 3.12
+    @gtkdoc gtk GtkPopover *)
+val popover : 
+  ?relative_to:GObj.widget ->
+  ?position:GtkEnums.position_type ->
+  ?modal:bool ->
+  ?transitions_enabled:bool ->
+  unit -> popover
+
 (** {3 GtkEventBox} *)
 
 (** A widget used to catch events for widgets which do not have their own window
