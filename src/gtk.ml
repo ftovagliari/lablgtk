@@ -207,6 +207,7 @@ type tooltip = [`tooltip] obj
 type stack = [container|`stack]
 type stack_switcher = [box|`stackswitcher]
 type popover = [bin|`popover]
+type overlay = [bin|`overlay]
 
 (* re-export Gobject.obj *)
 type 'a obj = 'a Gobject.obj

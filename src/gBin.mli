@@ -109,6 +109,31 @@ val popover :
   unit -> popover
 
 (** {3 GtkEventBox} *)
+(** {3 GtkOverlay} *)
+
+class overlay_signals : ([> Gtk.overlay] as 'a) Gtk.obj ->
+  object
+    inherit GContainer.container_signals
+    val obj : 'a obj
+  end
+
+class overlay : Gtk.overlay obj ->
+  object
+    inherit GContainer.bin
+    val obj : Gtk.overlay obj
+    method add_overlay : widget -> unit
+    method set_overlay_pass_through : widget -> bool -> unit
+    method reorder_overlay : widget -> int -> unit
+  method connect : overlay_signals
+end
+
+val overlay :
+  ?border_width:int ->
+  ?width:int ->
+  ?height:int ->
+  ?packing:(widget -> unit) -> ?show:bool -> unit -> overlay
+
+  (** {3 GtkEventBox} *)
 
 (** A widget used to catch events for widgets which do not have their own window
    @gtkdoc gtk GtkEventBox *)

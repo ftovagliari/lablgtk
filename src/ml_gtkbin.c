@@ -53,6 +53,7 @@ CAMLprim value ml_gtkbin_init(value unit)
         gtk_handle_box_get_type() +
         gtk_viewport_get_type() +
         gtk_popover_get_type() +
+        gtk_overlay_get_type() +
         gtk_scrolled_window_get_type() 
 #ifdef HASGTK24
         + gtk_expander_get_type()
@@ -90,6 +91,11 @@ CAMLprim value ml_gtk_popover_get_pointing_to(value v_popover) {
     }
     CAMLreturn(Val_int(0)); /* None */
 }
+
+#define GtkOverlay_val(val) check_cast(GTK_OVERLAY, val)
+ML_2 (gtk_overlay_add_overlay, GtkOverlay_val, GtkWidget_val, Unit)
+ML_3 (gtk_overlay_set_overlay_pass_through, GtkOverlay_val, GtkWidget_val, Bool_val, Unit)
+ML_3 (gtk_overlay_reorder_overlay, GtkOverlay_val, GtkWidget_val, Int_val, Unit)
 
 /* gtkalignment.h */
 /*

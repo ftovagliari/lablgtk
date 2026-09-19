@@ -58,3 +58,9 @@ module Popover = struct
     | Some (x, y, width, height) ->
         Some (Gdk.Rectangle.create ~x ~y ~width ~height)
 end
+
+module Overlay = struct
+  include Overlay
+  external add_overlay : [> `overlay] Gtk.obj -> [> `widget] Gtk.obj -> unit
+    = "ml_gtk_overlay_add_overlay"
+end
