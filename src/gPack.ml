@@ -281,3 +281,14 @@ end
 let stack_switcher =
   StackSwitcher.make_params [] ~cont:(
   pack_container ~create:(fun p -> new stack_switcher (StackSwitcher.create p)))
+
+class header_bar obj = object
+  inherit container obj
+  inherit header_bar_props
+  method pack_start w = HeaderBar.pack_start obj (as_widget w)
+  method pack_end w = HeaderBar.pack_end obj (as_widget w)
+end
+
+let header_bar =
+  HeaderBar.make_params [] ~cont:(
+    pack_container ~create:(fun p -> new header_bar (HeaderBar.create p)))
