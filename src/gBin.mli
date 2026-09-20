@@ -108,7 +108,6 @@ val popover :
   ?transitions_enabled:bool ->
   unit -> popover
 
-(** {3 GtkEventBox} *)
 (** {3 GtkOverlay} *)
 
 class overlay_signals : ([> Gtk.overlay] as 'a) Gtk.obj ->

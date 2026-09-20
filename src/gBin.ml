@@ -70,6 +70,7 @@ let popover ?relative_to ?position ?modal ?transitions_enabled =
   GtkBin.Popover.make_params []
     ?relative_to ?position ?modal ?transitions_enabled
     ~cont:(fun pl () -> new popover (GtkBin.Popover.create pl))
+    
 class overlay_signals obj = object
   inherit GContainer.container_signals_impl (obj : [> Gtk.overlay] Gtk.obj)
 end

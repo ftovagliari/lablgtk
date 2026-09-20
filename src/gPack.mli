@@ -479,15 +479,14 @@ class header_bar : ([> Gtk.header_bar] as 'a) obj ->
   end
 
 val header_bar :
-  ?custom_title: Gtk.widget Gtk.obj ->
+  ?custom_title: GObj.widget ->
   ?decoration_layout:string ->
   ?decoration_layout_set:bool ->
   ?has_subtitle:bool ->
   ?show_close_button:bool ->
   ?spacing:int ->
-  ?subtitle:string ->
   ?title:string ->
-  ?border_width:int ->
-  ?width:int ->
-  ?height:int ->
-  ?packing:(GObj.widget -> unit) -> ?show:bool -> unit -> header_bar
+  ?subtitle:string ->
+  ?show:bool ->
+  unit -> header_bar
+  
