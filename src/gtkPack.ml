@@ -82,3 +82,13 @@ module Stack = Stack
 module StackSwitcher = StackSwitcher
 
 module HeaderBar = HeaderBar
+
+module InfoBar = struct 
+  include InfoBar
+  external content_area : [> `infobar] Gtk.obj -> Gtk.box Gtk.obj
+    = "ml_gtk_info_bar_get_content_area"
+  external action_area : [> `infobar] Gtk.obj -> Gtk.box Gtk.obj
+    = "ml_gtk_info_bar_get_action_area"
+  external add_button : [> `infobar] Gtk.obj -> string -> int -> unit
+    = "ml_gtk_info_bar_add_button"
+end

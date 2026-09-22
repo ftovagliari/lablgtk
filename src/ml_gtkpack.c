@@ -59,6 +59,7 @@ CAMLprim value ml_gtkpack_init(value unit)
         gtk_size_group_get_type() +
         gtk_stack_get_type() +
         gtk_header_bar_get_type() +
+        gtk_info_bar_get_type() +
         gtk_stack_switcher_get_type();
     return Val_GType(t);
 }
@@ -222,3 +223,8 @@ ML_3 (gtk_stack_set_visible_child_full, GtkStack_val, String_val, Stack_transiti
 #define GtkHeaderBar_val(val) check_cast(GTK_HEADER_BAR,val)
 ML_2 (gtk_header_bar_pack_start, GtkHeaderBar_val, GtkWidget_val, Unit)
 ML_2 (gtk_header_bar_pack_end, GtkHeaderBar_val, GtkWidget_val, Unit)
+
+#define GtkInfoBar_val(val) check_cast(GTK_INFO_BAR,val)
+ML_1 (gtk_info_bar_get_content_area, GtkInfoBar_val, Val_GObject)
+ML_1 (gtk_info_bar_get_action_area, GtkInfoBar_val, Val_GObject)
+ML_3 (gtk_info_bar_add_button, GtkInfoBar_val, String_val, Int_val, Unit)

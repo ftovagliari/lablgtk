@@ -544,6 +544,8 @@ let process_file f =
     end;
   close_out oc;
   (* Output classes *)
+  outfile := Filename.basename !outfile;
+  Printf.printf "-------> %s%!" !outfile;
   if !ooutfile = "" then ooutfile := "o" ^ !outfile;
   let oc = open_out !ooutfile in
   let ppf = Format.formatter_of_out_channel oc in

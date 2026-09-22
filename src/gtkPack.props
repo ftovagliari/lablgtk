@@ -171,3 +171,11 @@ class HeaderBar set wrap wrapsig : Container {
   method pack_start : "[>`widget] obj -> unit"
   method pack_end : "[>`widget] obj -> unit"
 }
+
+class InfoBar set wrap wrapsig : Container {
+  "message-type" GtkMessageType    : Read / Write
+  "revealed" gboolean              : Read / Write
+  "show-close-button" gboolean     : Read / Write
+  signal close 
+  signal response : gint
+}
