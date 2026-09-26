@@ -392,7 +392,13 @@ static value g_value_get_mlvariant (GValue *val)
     CAMLreturn(ret);
 }
 
-ML_1 (g_value_get_mlvariant, GValue_val, ID)
+CAMLprim value ml_g_value_get_mlvariant (value arg1)
+{
+  CAMLparam1 (arg1);
+  CAMLlocal1 (ret);
+  ret = g_value_get_mlvariant (GValue_val (arg1));
+  CAMLreturn (ret);
+}
 
 static void g_value_set_mlvariant (GValue *val, value arg)
 {
