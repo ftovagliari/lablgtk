@@ -327,7 +327,12 @@ let process_file f =
     (fun (name, gtk_name, attrs, _, _, _) ->
       add_object gtk_name (type_name name ~attrs));
   (* Output modules *)
-  if !outfile = "" then outfile := base ^ "Props.ml";
+  if !outfile = "" then begin
+    if not (Filename.is_implicit base) && Filename.is_relative base then
+      outfile := (Filename.basename base) ^ "Props.ml" (* basename is sufficient here *)
+    else
+      outfile := base ^ "Props.ml"
+  end;
   let oc = open_out !outfile in
   let ppf = Format.formatter_of_out_channel oc in
   let out fmt = Format.fprintf ppf fmt in
