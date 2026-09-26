@@ -209,6 +209,7 @@ type stack_switcher = [box|`stackswitcher]
 type popover = [bin|`popover]
 type overlay = [bin|`overlay]
 type header_bar = [container|`headerbar]
+type info_bar = [container|`infobar]
 type spinner = [widget|`spinner]
 
 (* re-export Gobject.obj *)

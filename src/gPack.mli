@@ -454,6 +454,7 @@ val stack_switcher :
   ?packing:(GObj.widget -> unit) -> ?show:bool -> unit -> stack_switcher
 
 (** @gtkdoc gtk GtkHeaderBar *)
+
 class header_bar : ([> Gtk.header_bar] as 'a) obj ->
   object
     inherit container
@@ -489,4 +490,39 @@ val header_bar :
   ?subtitle:string ->
   ?show:bool ->
   unit -> header_bar
-  
+
+(** @gtkdoc gtk GtkInfoBar *)
+
+class info_bar_signals : ([> Gtk.info_bar] as 'a) Gtk.obj ->
+  object
+    inherit GContainer.container_signals
+    val obj : 'a obj
+    method close : callback:(unit -> unit) -> GtkSignal.id
+    method response : callback:(GtkEnums.response -> unit) -> GtkSignal.id
+  end
+
+  class info_bar : ([> Gtk.info_bar] as 'a) obj ->
+    object
+      inherit container
+      val obj : 'a obj
+      method show_close_button : bool
+      method revealed : bool
+      method message_type : GtkEnums.message_type
+      method set_show_close_button : bool -> unit
+      method set_revealed : bool -> unit
+      method set_message_type : GtkEnums.message_type -> unit
+      method content_area : box
+      method action_area : box
+      method add_button : string -> GtkEnums.response -> unit
+      method add_buttons : (string * GtkEnums.response) list -> unit
+      method connect : info_bar_signals
+    end
+
+val info_bar : 
+  ?message_type:GtkEnums.message_type ->
+  ?revealed:bool ->
+  ?show_close_button:bool ->
+  ?border_width:int ->
+  ?width:int ->
+  ?height:int ->
+  ?packing:(GObj.widget -> unit) -> ?show:bool -> unit -> info_bar

@@ -298,7 +298,7 @@ let header_bar
   ?spacing 
   ?title 
   ?subtitle ?show () =
-  let custom_title = Option.map (fun (w : GObj.widget) -> w#as_widget) custom_title in
+    let custom_title = Option.map (fun (w : GObj.widget) -> w#as_widget) custom_title in
     HeaderBar.make_params [] 
       ?custom_title ?decoration_layout ?decoration_layout_set ?has_subtitle ?show_close_button ?spacing ?title ?subtitle
       ~cont:(fun p -> 
@@ -306,3 +306,27 @@ let header_bar
         if show <> Some false then self#misc#show ();
         self)
 
+class info_bar_signals obj = object (self)
+  inherit GContainer.container_signals_impl (obj : [> Gtk.info_bar] Gtk.obj)
+  method close ~(callback : unit -> unit) =
+    self#connect InfoBar.S.close ~callback
+  method response ~(callback : GtkEnums.response -> unit) =
+    self#connect InfoBar.S.response
+      ~callback:(fun i -> callback (Gpointer.decode_variant GtkEnums.Conv.response_tbl i))
+end
+
+class info_bar obj = object (self)
+  inherit container obj
+  inherit info_bar_props
+  method content_area = new box (InfoBar.content_area obj)
+  method action_area = new box (InfoBar.action_area obj)
+  method add_button text resp_id = InfoBar.add_button obj text 
+    (Gpointer.encode_variant GtkEnums.Conv.response_tbl resp_id)
+  method add_buttons buttons = 
+    buttons |> List.iter (fun (b, r) -> self#add_button b r)
+  method connect : info_bar_signals = new info_bar_signals obj
+end
+
+let info_bar =
+  InfoBar.make_params [] ~cont:(
+    pack_container ~create:(fun p -> new info_bar (InfoBar.create p)))
