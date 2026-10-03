@@ -225,6 +225,6 @@ ML_2 (gtk_header_bar_pack_start, GtkHeaderBar_val, GtkWidget_val, Unit)
 ML_2 (gtk_header_bar_pack_end, GtkHeaderBar_val, GtkWidget_val, Unit)
 
 #define GtkInfoBar_val(val) check_cast(GTK_INFO_BAR,val)
-ML_1 (gtk_info_bar_get_content_area, GtkInfoBar_val, Val_GObject)
-ML_1 (gtk_info_bar_get_action_area, GtkInfoBar_val, Val_GObject)
+ML_1 (gtk_info_bar_get_content_area, GtkInfoBar_val, Val_GtkWidget)
+ML_1 (gtk_info_bar_get_action_area, GtkInfoBar_val, Val_GtkWidget)
 ML_3 (gtk_info_bar_add_button, GtkInfoBar_val, String_val, Int_val, Unit)
